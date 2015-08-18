@@ -1,0 +1,25 @@
+
+
+  Pattern p = Pattern.compile("ab");
+  String u="abcdefsfsaffsabadfewfadfgea";
+  Matcher m= p.matcher(u);
+  int i=0;
+  System.out.println(m.matches());
+  while(m.find()){
+   i++;
+  }
+  System.out.println(i);
+
+
+
+String regEx = ".+/(.+)$";
+String str = "c:/dir1/dir2/name.txt";
+Pattern p = Pattern.compile(regEx);
+Matcher m = p.matcher(str);
+if (!m.find())
+{
+    System.out.println("文件路径格式错误!");
+    return;
+}
+System.out.println(m.group(1));
+
