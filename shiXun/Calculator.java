@@ -59,7 +59,8 @@ public class Calculator {
         v_jt[0].addMouseListener(new MouseAdapter(){
                public void mouseExited(MouseEvent e) {
                     String str = ((JTextField)e.getComponent()).getText();
-                    Pattern p = Pattern.compile("((-|/+)[0-9]+$)|([0-9]+$)|([0-9](/.)$)");
+                    //Pattern p = Pattern.compile("((-|/+)[0-9]+$)|([0-9]+$)|([0-9](/.))");
+                    Pattern p = Pattern.compile("((-|/+)[0-9]+$)|([0-9]+$)|^(-?/d+)(/./d+)?$");
                     Matcher m = p.matcher(str);
                     boolean b = m.matches();  
                     // boolean b = Pattern.matches("a*b", "aaaaab");
@@ -197,32 +198,6 @@ public class Calculator {
     public static void main(String[] argv){
         Calculator ca = new Calculator();
         ca.go();
-/**
-
-  Pattern p = Pattern.compile("ab");
-  String u="abcdefsfsaffsabadfewfadfgea";
-  Matcher m= p.matcher(u);
-  int i=0;
-  System.out.println(m.matches());
-  while(m.find()){
-   i++;
-  }
-  System.out.println(i);
-
-
-
-String regEx = ".+/(.+)$";
-String str = "c:/dir1/dir2/name.txt";
-Pattern p = Pattern.compile(regEx);
-Matcher m = p.matcher(str);
-if (!m.find())
-{
-    System.out.println("文件路径格式错误!");
-    return;
-}
-System.out.println(m.group(1));
-
-*/
 
 
     }
