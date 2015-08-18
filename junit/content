@@ -1,0 +1,2 @@
+javac -classpath .:junit-4.9.jar CalculatorTest.java &&java -classpath .:junit-4.9.jar  -ea org.junit.runner.JUnitCore CalculatorTest
+cat content | sh -x
