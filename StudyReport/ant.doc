@@ -1,0 +1,101 @@
+再目录下执行ant默认寻找的 build.xml
+但是也可以指定文件路径 ant -file  build2.xml
+ant可以用来编译和运行java文件  类似c/c++的makefile文件
+看ant首先关注的是project标签  然后找target标签 再看project是否有fefault属性，然后找对应的target来理解 整个build.xml的运行过程
+声明属性就相当于申明变量用$()来引用变量，可以简化代码
+<?xml version="1.0"?>
+//申明任务 可以用description来注释
+<project name="GridWorld" default="make-zip" basedir=".">
+   <property file="build.properties"/>
+//申明很多的属性 以便使用
+   <property name="framework.dir" value="framework"/>  
+   <property name="projects.dir" value="projects"/>  
+   <property name="build.dir" value="build"/>  
+   <property name="dist.dir" value="dist"/>  
+   <property name="zip.name" value="GridWorldCode"/>
+   <property name="dist.zip.dir" value="${dist.dir}/${zip.name}"/>  
+   <property name="package.name" value="info.gridworld"/>
+   <property name="framework.resources" 
+             value="${framework.dir}/info/gridworld/gui/WorldFrameResources.properties" />
+   //一个init目标
+   <target name="init">
+   //时间戳
+      <tstamp>
+         <format property="version.date" pattern="yyyy-MM-dd" locale="en"/>
+      </tstamp>
+      //创建三个目录
+      <mkdir dir="${build.dir}"/>
+      <mkdir dir="${dist.dir}"/>
+      <mkdir dir="${dist.zip.dir}"/>
+   </target>
+
+   //这里是正则
+   <target name="props" depends="init" description="Set version-specific properties.">
+      <replaceregexp file="${framework.resources}" byline="true">
+         <regexp pattern="(version.id\s*=\s*).*"/>
+         <substitution expression="\1${version.id}"/>
+      </replaceregexp>
+      <replaceregexp file="${framework.resources}" byline="true">
+         <regexp pattern="(version.date\s*=\s*).*"/>
+         <substitution expression="\1${version.date}"/>
+      </replaceregexp>
+   </target>
+  // 编译java源文件
+   <target name="compile" depends="props">
+      <javac srcdir="${framework.dir}" destdir="${build.dir}" debug="true" target="1.5">
+         <compilerarg value="-Xlint:unchecked"/>
+      </javac>
+   </target>
+   
+   // 生成jar文件
+   <target name="build-jar" depends="compile">
+      <copy todir="${build.dir}">
+         <fileset dir="${framework.dir}">
+            <include name="**/*.gif"/>
+            <include name="**/*.properties"/>
+            <include name="**/*.html"/>
+         </fileset>
+      </copy>
+
+      <jar destfile="${dist.zip.dir}/gridworld.jar" basedir="${build.dir}"/>
+   </target>
+// 生成文本当
+   <target name="javadoc" depends="build-jar">
+      <javadoc
+            destdir="${dist.zip.dir}/javadoc"
+            packagenames="${package.name}.*"
+            sourcepath="${framework.dir}"
+            excludepackagenames="${package.name}.gui.*"
+            link="${java.api.url}"/>
+   </target>
+//制作压缩包
+   <target name="make-zip" depends="javadoc">
+      <copy todir="${dist.zip.dir}/projects">
+         <fileset dir="${projects.dir}">
+            <include name="**/*.java"/>
+            <include name="**/*.gif"/>
+         </fileset>
+      </copy>
+      <copy todir="${dist.zip.dir}/framework">      
+         <fileset dir="${framework.dir}">
+            <include name="**/*.java"/>
+            <include name="**/*.gif"/>
+            <include name="**/*.properties"/>
+         </fileset>
+      </copy>
+      <copy todir="${dist.zip.dir}">
+         <fileset dir="${basedir}">
+            <include name="build.xml"/>
+            <include name="build.properties"/>
+         </fileset>
+      </copy>
+      <delete file="${dist.dir}/${zip.name}.zip" />
+      <zip destfile="${dist.dir}/${zip.name}.zip" basedir="${dist.dir}">
+      </zip>
+   </target>
+// 清楚目录
+   <target name="clean">
+      <delete dir="${build.dir}"/>
+      <delete dir="${dist.dir}"/>
+   </target>
+</project>
