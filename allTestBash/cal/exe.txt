@@ -1,0 +1,2 @@
+cd /home/zhoutengteng/Desktop/java_test/allTestBash/cal/
+ant

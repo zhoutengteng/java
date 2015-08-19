@@ -1,0 +1,2 @@
+javac -classpath .:junit-4.9.jar HelloWorldTest.java
+java -classpath .:junit-4.9.jar -ea org.junit.runner.JUnitCore HelloWorldTest

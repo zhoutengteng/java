@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<project name="CustomTaskExample" default="main" basedir=".">
+    <taskdef name="filesorter" classname="FileSorter" classpath="."/>
+    <target name="main">
+         <filesorter file="input.txt" tofile="output.txt"/>
+    </target>
+</project>
