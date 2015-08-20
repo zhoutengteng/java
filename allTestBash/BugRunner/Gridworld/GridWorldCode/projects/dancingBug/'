@@ -1,0 +1,56 @@
+import info.gridworld.actor.Bug;
+
+public class DancingBug extends Bug
+{
+    private int steps;
+    private int sideLength;
+    private int direction_array[];
+    private int count;
+
+    /**
+     * Constructs a box bug that traces a square of a given side length
+     * @param length the side length
+     */
+    public DancingBug(int input_array[])
+    {
+        steps = 0;
+        count = 0;
+        sideLength = 1;
+        setDirection(90);
+        int num = input_array.length;
+        direction_array = new int[num];
+        System.arraycopy(input_array,0,direction_array,0,num);
+        directionByNumOfTurn(input_array[count]);
+        count++;
+    }
+
+    public void directionByNumOfTurn(int x) {
+        for (int i = 0; i < x; i++) {
+            turn();
+        }
+    }
+
+    /**
+     * Moves to the next location of the square.
+     */
+    public void act()
+    {
+        if (!canMove()) {
+            return;
+
+        }
+        if (steps < sideLength && canMove())
+        {
+            
+            move();
+            steps++;
+            steps = steps % direction_array.length;
+        }
+        else
+        {
+            directionByNumOfTurn(direction_array[count]);
+            count++;
+            steps = 0;
+        }
+    }
+}
