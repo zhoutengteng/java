@@ -29,7 +29,7 @@
 
 <target name = "junit" depends = "compile">
     <junit haltonfailure = "false" printsummary = "true" fork = "true">
-        <classpath refid = "compile.path"/>
+          <classpath refid = "compile.path"/>
           <formatter type = "xml"/>
           <batchtest todir = "${reports.dir}" unless = "testcase">
               <fileset dir = "${class.dir}">

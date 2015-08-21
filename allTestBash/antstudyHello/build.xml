@@ -1,7 +1,68 @@
-<?xml version="1.0"?>
-<project name="CustomTaskExample" default="main" basedir=".">
-    <taskdef name="filesorter" classname="FileSorter" classpath="."/>
-    <target name="main">
-         <filesorter file="input.txt" tofile="output.txt"/>
+<?xml version="1.0" encoding="utf-8"?>
+<project name="CustomTaskExample" default="run" basedir=".">
+    <property name="lib.dir" value="." />
+    <property name="reports.dir" value="reports" />
+    <path id="jarFile">
+      <pathelement location="${lib.dir}/junit-4.9.jar"/>
+    </path>
+    <path id="compileClasspath">  
+            <pathelement path="."/>
+            <pathelement location="."/>
+            <fileset dir="${basedir}">  
+                <include name="**/*.java" />  
+            </fileset>  
+    </path> 
+    <path id="runClassPath">
+        <pathelement path="."/>
+        <pathelement location="build"/>
+        <fileset dir=".">
+            <include name="**/*.class"/>
+            <include name="../*.jar"/>
+        </fileset>
+    </path>
+    <target name="clean">
+        <delete dir="build"/>
+        <mkdir dir="build" />
     </target>
+
+    <target name="compile" depends="clean">
+         <echo message="${basedir}"/>
+         <echo message="compileClasspath"/>
+         <javac srcdir="./src" destdir="build" includeAntRuntime="yes">
+                 <classpath refid="jarFile"/>
+         </javac>
+    </target>
+
+    <target name="run" depends="compile">
+      <junit printsummary="true" failureProperty="fail" haltonerror="false" haltonfailure="false" fork="yes" >
+         <classpath path="./build/">
+             <path refid="jarFile"/>
+             <!--<path refid="runClassPath"/>-->
+             <pathelement location="*.jar" />
+             <!--<pathelement path="."/> -->
+         </classpath>
+         <formatter type="xml"/>
+         <batchtest  todir="${reports.dir}"  unless = "testcase">
+                <fileset dir="./build">
+                     <include name="**/*Test.class" />
+                 </fileset>
+          </batchtest>
+
+      </junit>
+
+        <junitreport todir="${reports.dir}">
+            <fileset dir="${reports.dir}">
+                <include name="TEST-*.xml" />
+            </fileset>
+            <report format="frames" todir="${reports.dir}" />
+        </junitreport>
+     </target>
+<!--
+    <target name="run" depends="compile">
+         <java  classname="HelloWorldTest" fork="true">
+                 <classpath refid="runClassPath"/>
+                 <arg line="${param.msg}" />  
+         </java>
+    </target>
+  -->  
 </project>
