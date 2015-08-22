@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!-- 上层目录 -->
+<project name="GridWorld" default="run" basedir=".">
+   <property file="build.properties"/>
+   <property name="src.dir" value="src"/>  
+    <property name="package.name" value="info.gridworld"/>
+   <property name="othersrc.dir" value="${basedir}/other_src"/>
+   <property name="class.dir" value="lib"/>  
+   <property name="zip.name" value="jumperSrc"/>
+   <property name="lib.dir"  value="lib"/>
+   <property name="reports.dir" value="reports"/>
+   <property name="zip.dir" value="zip"/>
+   <property name="jar.dir" value="gridworldjar"/>
+   
+   <path id = "compile.path">
+        <fileset dir = "${lib.dir}">
+              <include name = "**/*.jar"/>
+        </fileset>
+   </path>
+   <target name = "clean">
+      <delete dir="${class.dir}"/>
+      <delete dir="${jar.dir}"/>
+      <delete dir="${reports.dir}"/>
+      <delete dir="${jar.dir}"/>
+      <delete file="${basedir}/${zip.name}.zip"/>
+      <delete dir="${reports.dir}"/>
+      <delete dir="javadoc"/>
+      <delete file="gridworld.jar"/>
+   </target>
+
+   <!-- 新建路径文件夹和删除已存在文件夹 -->
+   <target name="init" depends="clean">
+      <tstamp>
+         <format property="version.date" pattern="yyyy-MM-dd" locale="en"/>
+      </tstamp>
+      <delete dir="${class.dir}"/>
+      <delete dir="${reports.dir}"/>
+      <delete dir="${jar.dir}"/>
+      <mkdir dir="${reports.dir}"/>
+      <mkdir dir="${class.dir}"/>
+   </target>
+   <!--用正则表达式修改一些东西 -->
+
+
+   <target name="compile" depends="init">
+      <javac srcdir="${src.dir}" destdir="${class.dir}" debug="true"   includeantruntime = "true" classpathref="compile.path">
+         <compilerarg value="-Xlint:unchecked"/>
+      </javac>
+   </target>
+
+   
+   <target name="run" depends="compile">
+        <java classname = "ElephantCritterRunner" fork = "true">
+            <classpath path = "${lib.dir}/**.jar"/>
+            <!--classpath path = "${class.dir}"> 
+            </classpath-->
+            <classpath path = "${class.dir}"> 
+                <fileset dir="${class.dir}">
+                    <include name="**/*.gif"/>
+                    <include name="**/*.properties"/>
+                    <include name="**/*.html"/>
+                    <include name="**/*.class"/>
+                </fileset>
+            </classpath>
+        </java>
+    </target>
+
+
+</project>
