@@ -5,7 +5,7 @@
    <property name="src.dir" value="src"/>  
     <property name="package.name" value="info.gridworld"/>
    <property name="othersrc.dir" value="${basedir}/other_src"/>
-   <property name="class.dir" value="lib"/>  
+   <property name="class.dir" value="class"/>  
    <property name="zip.name" value="jumperSrc"/>
    <property name="lib.dir"  value="lib"/>
    <property name="reports.dir" value="reports"/>
@@ -15,6 +15,9 @@
    <path id = "compile.path">
         <fileset dir = "${lib.dir}">
               <include name = "**/*.jar"/>
+        </fileset>
+        <fileset dir = "${class.dir}">
+              <include name="**.class"/>
         </fileset>
    </path>
    <target name = "clean">
@@ -51,9 +54,7 @@
    
    <target name="run" depends="compile">
         <java classname = "ElephantCritterRunner" fork = "true">
-            <classpath path = "${lib.dir}/**.jar"/>
-            <!--classpath path = "${class.dir}"> 
-            </classpath-->
+            <!--classpath path = "${lib}/**.jar"/>
             <classpath path = "${class.dir}"> 
                 <fileset dir="${class.dir}">
                     <include name="**/*.gif"/>
@@ -61,7 +62,11 @@
                     <include name="**/*.html"/>
                     <include name="**/*.class"/>
                 </fileset>
-            </classpath>
+            </classpath-->
+            <!-- 这个path 是必须的　-->
+            <classpath path = "${class.dir}"/>
+            <classpath refid = "compile.path"/>
+            <classpath refid = "compile.path"/> 
         </java>
     </target>
 
