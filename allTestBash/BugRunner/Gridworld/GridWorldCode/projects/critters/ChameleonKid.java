@@ -19,6 +19,7 @@
 import info.gridworld.actor.Actor;
 import info.gridworld.actor.Critter;
 import info.gridworld.grid.Location;
+import info.gridworld.grid.Grid;
 
 import java.util.ArrayList;
 import java.awt.Color;
@@ -28,39 +29,21 @@ import java.awt.Color;
  * it moves through the grid. <br />
  * The implementation of this class is testable on the AP CS A and AB exams.
  */
-public class ChameleonCritter extends Critter
+public class ChameleonKid extends ChameleonCritter
+
 {
     /**
      * Randomly selects a neighbor and changes this critter's color to be the
      * same as that neighbor's. If there are no neighbors, no action is taken.
      */
-    private static final double DARKENING_FACTOR = 0.05;
-    
-    public void processActors(ArrayList<Actor> actors)
-    {
-
-
-        int n = actors.size();
-        if (n == 0) {
-            Color c = getColor();
-            int red = (int) (c.getRed() * (1 - DARKENING_FACTOR));
-            int green = (int) (c.getGreen() * (1 - DARKENING_FACTOR));
-            int blue = (int) (c.getBlue() * (1 - DARKENING_FACTOR));
-            setColor(new Color(red, green, blue));
-            return;
-        }
-        int r = (int) (Math.random() * n);
-
-        Actor other = actors.get(r);
-        setColor(other.getColor());
-    }
-
-    /**
-     * Turns towards the new location as it moves.
-     */
-    public void makeMove(Location loc)
-    {
-        setDirection(getLocation().getDirectionToward(loc));
-        super.makeMove(loc);
+    public ArrayList<Actor> getActors(){
+        ArrayList<Actor> actors = new ArrayList<Actor>();
+        Location loc = getLocation();
+        Location neighborLoc1 = loc.getAdjacentLocation(getDirection());
+        Location neighborLoc2 = loc.getAdjacentLocation(getDirection()+180);
+        Grid<Actor> grid =  getGrid();
+        if (grid.isValid(neighborLoc1) && grid.get(neighborLoc1) != null) actors.add(grid.get(neighborLoc1));
+        if (grid.isValid(neighborLoc2) && grid.get(neighborLoc2) != null ) actors.add(grid.get(neighborLoc2));
+        return actors;
     }
 }
