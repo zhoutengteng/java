@@ -25,14 +25,14 @@ public class MazeBug extends Bug {
 	public Location next;
 	public Location last;
     public int directionCount[];
-	public Stack<Location> path;
+	public Stack<Location> path; 
 	boolean allTrue;
 	boolean beginTrue;
 	boolean willMove;
 	public boolean isEnd = false;
 	public Stack<ArrayList<Location>> crossLocation = new Stack<ArrayList<Location>>();
 	public Integer stepCount = 0;
-    public Map<Location, Boolean> isComed; 
+    public Map<Location, Boolean> isComed;
 	boolean hasShown = false;//final message has been shown
 	
 
@@ -45,16 +45,46 @@ public class MazeBug extends Bug {
 	 *            the side length
 	 */
 	public MazeBug() {
+		directionCount = new int[8];
+		for (int i = 0; i < 8; i++) {
+			directionCount[i] = 0;
+		}
 		beginTrue = true;
 		setColor(Color.RED);
+		isEnd = false;
+		hasShown = false;
 		allTrue = true;
 		willMove = true;
 		path = new Stack<Location>();
 		isComed = new HashMap<Location, Boolean>();
 		isComed.put(last, false);
-		ArrayList<Location> arrList = new ArrayList<Location>();
+		//ArrayList<Location> arrList = new ArrayList<Location>();
 	}
 
+	public void handleDirectionCount(Location tmpL1, Location nexL2, int addOrMinus) {
+		int dir = tmpL1.getDirectionToward(nexL2);
+		// 0-north 1-west 2-south 3-east
+		if (dir == 0) {
+			directionCount[0] = directionCount[0] + addOrMinus;
+		} else if (dir == 90) {
+			directionCount[1] = directionCount[1] + addOrMinus;
+		} else if (dir == 180) {
+			directionCount[2] = directionCount[2] + addOrMinus;
+		} else if (dir == 270) {
+			directionCount[3] = directionCount[3] + addOrMinus;
+		}
+		
+	}
+	
+	public ArrayList<Location> handleArr () {
+		ArrayList<Location> nwArrayList = new ArrayList<Location>(); 
+		
+		
+		
+		return nwArrayList;
+	}
+			
+	
 	/**
 	 * Moves to the next location of the square.
 	 */
@@ -66,7 +96,10 @@ public class MazeBug extends Bug {
 			isComed.put(next, true);
 			return;
 		}
-		
+		if (hasShown) {
+			return;
+		}
+		System.out.println(directionCount[0] + "  " + directionCount[1] + "  " + directionCount[2] + "  " + directionCount[3]);
         //如果栈为空　必然到了就设置hasShown = true 否则就设置为false 
         if (crossLocation.isEmpty()) {
             isEnd = true;
@@ -81,10 +114,13 @@ public class MazeBug extends Bug {
 		// 只检测null和花能走
         allTrue = true;
         //如果第一个数组元素的为全部走过就返回，肯定不用执行，否则取得数组的第一个false元素，判断是否走过
+        //
         for (Location x : arrlist) {
             if (isComed.get(x) == false) {
                 isComed.put(x,true);
-                if (willMove) last = next;
+                if (willMove) {
+                	last = next;
+                } 
                 next = x;
                 allTrue = false;
                 break;
@@ -106,13 +142,14 @@ public class MazeBug extends Bug {
         
 
 		System.out.println("可以走  " + willMove);
-
+        
 		
 		if (isEnd == true) {
 		//to show step count when reach the goal		
 			if (hasShown == false) {
 				String msg = stepCount.toString() + " steps";
 				JOptionPane.showMessageDialog(null, msg);
+				
 				hasShown = true;
 				
 			}
@@ -143,22 +180,68 @@ public class MazeBug extends Bug {
 		Location up = new Location(next.getRow() - 1, next.getCol());
 		Location down = new Location(next.getRow() + 1, next.getCol());
 		ArrayList<Location> valid = new ArrayList<Location>();
+		int r = (int) (Math.random() * 2);
+		if (r == 0) {
+		if (gr.isValid(up)) {
+			//directionCount[4] = 1;
+			valid.add(up);
+			if (!isComed.containsKey(up)) {
+				isComed.put(up, false);
+			}
+		}
 		if (gr.isValid(left)){
 			valid.add(left);
-			if (!isComed.containsKey(left)) isComed.put(left, false);
-		}
-		if (gr.isValid(right)) {
-			valid.add(right);
-			if (!isComed.containsKey(right))isComed.put(right, false);
-		}
-		if (gr.isValid(up)) {
-			valid.add(up);
-			if (!isComed.containsKey(up))isComed.put(up, false);
+			//directionCount[5] = 1;
+			if (!isComed.containsKey(left)) {
+				isComed.put(left, false);
+			} 
 		}
 		if (gr.isValid(down)) {
 			valid.add(down);
-			if (!isComed.containsKey(down))isComed.put(down, false);
+			//directionCount[6] = 1;
+			if (!isComed.containsKey(down)) {
+				isComed.put(down, false);
+			} 
 		}
+		if (gr.isValid(right)) {
+			valid.add(right);
+			//directionCount[7] = 1;
+			if (!isComed.containsKey(right)) {
+				isComed.put(right, false);
+			} 
+		}    
+		} else {
+			if (gr.isValid(down)) {
+				valid.add(down);
+				//directionCount[6] = 1;
+				if (!isComed.containsKey(down)) {
+					isComed.put(down, false);
+				} 
+			}
+			if (gr.isValid(right)) {
+				valid.add(right);
+				//directionCount[7] = 1;
+				if (!isComed.containsKey(right)) {
+					isComed.put(right, false);
+				} 
+			} 
+			if (gr.isValid(up)) {
+				//directionCount[4] = 1;
+				valid.add(up);
+				if (!isComed.containsKey(up)) {
+					isComed.put(up, false);
+				}
+			}
+			if (gr.isValid(left)){
+				valid.add(left);
+				//directionCount[5] = 1;
+				if (!isComed.containsKey(left)) {
+					isComed.put(left, false);
+				} 
+			}
+			
+		}
+
 		System.out.println("这添加的valid的点有几个　" + valid.size());
 		return valid;
 	}
@@ -201,8 +284,13 @@ public class MazeBug extends Bug {
 		System.out.println(next);
 		if (gr.isValid(next)) {
 			if (path.size() != 0) {
-				Location a = path.pop();
+				 Location a = path.pop();
 			     setDirection(next.getDirectionToward(a));
+			     if (getGrid().get(next) instanceof Flower) {
+			    	 handleDirectionCount(next, a, -1);
+			     } else {
+			         handleDirectionCount(next, a, 1);
+			     }
 			     path.push(a);
 			}
 			moveTo(next);
