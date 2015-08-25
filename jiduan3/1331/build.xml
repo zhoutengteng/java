@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<!-- 上层目录 -->
+<project name="GridWorld" default="junit" basedir=".">
+   <property file="build.properties"/>
+   <property name="src.dir" value="src"/>  
+    <property name="package.name" value="info.gridworld"/>
+   <property name="othersrc.dir" value="${basedir}/other_src"/>
+   <property name="class.dir" value="class"/>  
+   <property name="zip.name" value="jumperSrc"/>
+   <property name="lib.dir"  value="lib"/>
+   <property name="reports.dir" value="reports"/>
+   <property name="zip.dir" value="zip"/>
+   <property name="jar.dir" value="gridworldjar"/>
+   <property name="othersrc.resources" value="${othersrc.dir}/info/gridworld/gui/WorldFrameResources.properties" />
+   
+   <path id = "compile.path">
+        <fileset dir = "${lib.dir}">
+              <include name = "**/*.jar"/>
+        </fileset>
+        <fileset dir = "${basedir}">
+              <include name = "**/*.jar"/>
+        </fileset>
+   </path>
+   <target name = "clean">
+      <delete dir="${class.dir}"/>
+      <delete dir="${jar.dir}"/>
+      <delete dir="${reports.dir}"/>
+      <delete dir="${jar.dir}"/>
+      <delete file="${basedir}/${zip.name}.zip"/>
+      <delete dir="${reports.dir}"/>
+      <delete dir="javadoc"/>
+      <delete file="gridworld.jar"/>
+   </target>
+
+   <!-- 新建路径文件夹和删除已存在文件夹 -->
+   <target name="init" depends="clean">
+      <tstamp>
+         <format property="version.date" pattern="yyyy-MM-dd" locale="en"/>
+      </tstamp>
+      <delete dir="${class.dir}"/>
+      <delete dir="${reports.dir}"/>
+      <delete dir="${jar.dir}"/>
+      <mkdir dir="${reports.dir}"/>
+      <mkdir dir="${class.dir}"/>
+   </target>
+   <!--用正则表达式修改一些东西 -->
+
+   <target name="props" depends="init" description="Set version-specific properties.">
+      <replaceregexp file="${othersrc.resources}" byline="true">
+         <regexp pattern="(version.id\s*=\s*).*"/>
+         <substitution expression="\1${version.id}"/>
+      </replaceregexp>
+      <replaceregexp file="${othersrc.resources}" byline="true">
+         <regexp pattern="(version.date\s*=\s*).*"/>
+         <substitution expression="\1${version.date}"/>
+      </replaceregexp>
+   </target>
+
+   <target name="compile" depends="props">
+      <javac srcdir="${othersrc.dir}" destdir="${class.dir}" debug="true"   includeantruntime = "true" classpathref="compile.path">
+         <compilerarg value="-Xlint:unchecked"/>
+      </javac>
+      <javac srcdir="${src.dir}" destdir="${class.dir}" debug="true"   includeantruntime = "true" classpathref="compile.path">
+         <compilerarg value="-Xlint:unchecked"/>
+      </javac>
+      <copy todir="${class.dir}">      
+          <fileset dir="${othersrc.dir}">
+              <include name="**/*.gif"/>
+              <include name="**/*.properties"/>
+          </fileset>
+                <fileset dir="${basedir}/bmptest/goal/">
+                    <include name="**/*.bmp"/>
+                    <include name="**/*.properties"/>
+                    <include name="**/*.html"/>
+                    <include name="**/*.class"/>
+                </fileset>
+                <fileset dir="${basedir}/bmptest/">
+                    <include name="**/*.bmp"/>
+                    <include name="**/*.properties"/>
+                    <include name="**/*.html"/>
+                    <include name="**/*.class"/>
+                </fileset>
+      </copy>
+   </target>
+
+   <target name="build-jar" depends="compile">
+      <jar destfile="${lib.dir}/gridworld.jar" basedir="${class.dir}"/>
+   </target>
+   
+   <target name="run" depends="compile">
+        <java classname = "ImageReaderRunner" fork = "true">
+            <classpath refid = "compile.path"/>
+            <classpath path = "${class.dir}"> 
+                <fileset dir="${basedir}/bmptest/goal/">
+                    <include name="**/*.bmp"/>
+                    <include name="**/*.properties"/>
+                    <include name="**/*.html"/>
+                    <include name="**/*.class"/>
+                </fileset>
+                <fileset dir="${basedir}/bmptest/">
+                    <include name="**/*.gif"/>
+                    <include name="**/*.properties"/>
+                    <include name="**/*.html"/>
+                    <include name="**/*.class"/>
+                </fileset>
+            </classpath>
+        </java>
+    </target>
+
+
+    <target name="junit" depends="compile">
+      <junit printsummary="true" failureProperty="fail" haltonerror="false" haltonfailure="false" fork="yes" >
+         <classpath path="${basedir}">
+           <!-- 这两个不能交换的 两种引用还是有区别的-->
+             <path refid="compile.path" />
+             <!--pathelement location="${lib.dir}/*.jar" /-->
+             <pathelement location="${class.dir}/*.class"/>
+         </classpath>
+         <formatter type="xml"/>
+         <batchtest  todir="${reports.dir}"  unless = "testcase">
+                <fileset dir="${class.dir}">
+                     <include name="**/*Test.class" />
+                 </fileset>
+          </batchtest>
+      </junit>
+
+        <junitreport todir="${reports.dir}">
+            <fileset dir="${reports.dir}">
+                <include name="TEST-*.xml" />
+            </fileset>
+            <report format="frames" todir="${reports.dir}" />
+        </junitreport>
+     </target>
+
+
+   <target name="javadoc" depends="build-jar">
+     <delete dir="javadoc"/>
+     <mkdir dir="javadoc"/>
+       <!-- 放入源码 生成javadoc   -->
+      <javadoc
+            destdir="${basedir}/javadoc"
+            packagenames="${package.name}.*"
+            sourcepath="${othersrc.dir}"
+            excludepackagenames="${package.name}.gui.*"
+            link="${java.api.url}"/>
+   </target>
+
+   <target name="make-zip" depends="javadoc">
+      <mkdir dir="${zip.dir}"/>
+      
+      <copy todir="${zip.dir}">
+         <fileset dir="${src.dir}">
+            <include name="**/*.java"/>
+            <include name="**/*.gif"/>
+         </fileset>
+      </copy>
+      <copy todir="${zip.dir}">      
+         <fileset dir="${othersrc.dir}">
+            <include name="**/*.java"/>
+            <include name="**/*.gif"/>
+            <include name="**/*.properties"/>
+         </fileset>
+      </copy>
+      <copy todir="${zip.dir}">
+         <fileset dir="${basedir}">
+            <include name="build.xml"/>
+            <include name="build.properties"/>
+         </fileset>
+      </copy>
+
+      <zip destfile="${basedir}/${zip.name}.zip" basedir="${zip.dir}"/>
+      <delete dir="${zip.dir}" />
+   </target>
+</project>
