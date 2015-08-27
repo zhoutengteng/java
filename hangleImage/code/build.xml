@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!-- 上层目录 -->
+<project name="Image" default="run" basedir=".">
+   <property name="src.dir" value="src"/>  
+   <property name="class.dir" value="class"/>  
+   <property name="lib.dir"  value="lib"/>
+   <property name="reports.dir" value="reports"/>
+   
+   <path id = "compile.path">
+        <fileset dir = "${lib.dir}">
+              <include name = "**/*.jar"/>
+        </fileset>
+   </path>
+   <target name = "clean">
+      <mkdir dir="${reports.dir}"/>
+      <mkdir dir="${class.dir}"/>
+   </target>
+
+
+   <target name="compile" depends="clean">
+      <javac srcdir="${src.dir}" destdir="${class.dir}" debug="true"   includeantruntime = "true" classpathref="compile.path">
+         <compilerarg value="-Xlint:unchecked"/>
+      </javac>
+      <copy todir="${class.dir}">      
+                <fileset dir="${basedir}/bmptest/goal/">
+                    <include name="*.bmp"/>
+                </fileset>
+                <fileset dir="${basedir}/bmptest/">
+                    <include name="*.bmp"/>
+                </fileset>
+      </copy>
+   </target>
+
+   <target name="build-jar" depends="compile">
+      <jar destfile="${lib.dir}/gridworld.jar" basedir="${class.dir}"/>
+   </target>
+   
+   <target name="run" depends="compile">
+        <java classname = "ImageReaderRunner" fork = "true">
+            <classpath refid = "compile.path"/>
+            <classpath path = "${class.dir}"/> 
+        </java>
+    </target>
+
+
+    <target name="junit" depends="compile">
+      <junit printsummary="true" failureProperty="fail" haltonerror="false" haltonfailure="false" fork="yes" >
+         <classpath path="${basedir}">
+           <!-- 这两个不能交换的 两种引用还是有区别的-->
+             <path refid="compile.path" />
+             <!--pathelement location="${lib.dir}/*.jar" /-->
+             <pathelement location="${class.dir}"/>
+         </classpath>
+         <formatter type="xml"/>
+         <batchtest  todir="${reports.dir}"  unless = "testcase">
+                <fileset dir="${class.dir}">
+                     <include name="**/*Test.class" />
+                 </fileset>
+          </batchtest>
+      </junit>
+
+        <junitreport todir="${reports.dir}">
+            <fileset dir="${reports.dir}">
+                <include name="TEST-*.xml" />
+            </fileset>
+            <report format="frames" todir="${reports.dir}" />
+        </junitreport>
+     </target>
+
+
+</project>
