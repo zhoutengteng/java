@@ -43,11 +43,15 @@ public class ImplementImageProcesser implements IImageProcessor {
         for (int i = 0; i < img.getWidth(null); i++) {
             for (int j = 0; j <  img.getHeight(null); j++) {
                 int RGB = img.getRGB(i,j);
-                int red = (int)(((double)((RGB & 0xff0000) >> 16)) * 0.299);
-                int green = (int)(((double)((RGB & 0x00ff00) >> 8)) * 0.587);
-                int black = (int)(((double)(RGB & 0x0000ff) +0.0) * 0.114);
-		int temp = red+green+black;
-                int newRGB = (0xff000000) + (temp << 16) + (temp << 8) + temp;
+                //int red = (int)(((double)((RGB & 0x00ff0000) >> 16)) * 0.299);
+                //int green = (int)(((double)((RGB & 0x0000ff00) >> 8)) * 0.587);
+                //int black = (int)(((double)(RGB & 0x000000ff) +0.0) * 0.114);
+                double red = ((RGB & 0x00ff0000) >> 16) * 0.299;
+                double green = ((RGB & 0x0000ff00) >> 8) * 0.587;
+                double black = ((RGB & 0x000000ff) ) * 0.114;
+                int temp = (int)(red + green + black);
+                //int newRGB = (0xff000000) + (temp << 16) + (temp << 8) + temp;
+                int newRGB = (0xff000000) | (temp << 16) | (temp << 8) | temp;
                 img.setRGB(i,j, newRGB);                
             }
         }        

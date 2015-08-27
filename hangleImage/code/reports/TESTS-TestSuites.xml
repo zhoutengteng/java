@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-  <testsuite errors="0" failures="2" hostname="zhoutengteng-Lenovo-IdeaPad-Y470" id="0" name="ImplementImageIOTest" package="" skipped="0" tests="8" time="1.92" timestamp="2015-08-26T17:57:40">
+  <testsuite errors="0" failures="0" hostname="zhoutengteng-Lenovo-IdeaPad-Y470" id="0" name="ImplementImageIOTest" package="" skipped="0" tests="8" time="2.015" timestamp="2015-08-27T01:43:31">
       <properties>
           <property name="ant.project.invoked-targets" value="junit" />
 
@@ -34,7 +34,7 @@
 
           <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
 
-          <property name="user.dir" value="/home/zhoutengteng/Desktop/java_test/jiduan3/1331" />
+          <property name="user.dir" value="/home/zhoutengteng/Desktop/java_test/hangleImage/code" />
 
           <property name="java.runtime.version" value="1.7.0_79-b14" />
 
@@ -42,7 +42,7 @@
 
           <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment" />
 
-          <property name="basedir" value="/home/zhoutengteng/Desktop/java_test/jiduan3/1331" />
+          <property name="basedir" value="/home/zhoutengteng/Desktop/java_test/hangleImage/code" />
 
           <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/endorsed" />
 
@@ -78,7 +78,7 @@
 
           <property name="os.version" value="3.13.0-62-generic" />
 
-          <property name="ant.file" value="/home/zhoutengteng/Desktop/java_test/jiduan3/1331/build.xml" />
+          <property name="ant.file" value="/home/zhoutengteng/Desktop/java_test/hangleImage/code/build.xml" />
 
           <property name="user.home" value="/home/zhoutengteng" />
 
@@ -92,17 +92,17 @@
 
           <property name="file.encoding" value="UTF-8" />
 
-          <property name="ant.file.Image" value="/home/zhoutengteng/Desktop/java_test/jiduan3/1331/build.xml" />
+          <property name="ant.file.Image" value="/home/zhoutengteng/Desktop/java_test/hangleImage/code/build.xml" />
 
           <property name="user.name" value="zhoutengteng" />
 
-          <property name="java.class.path" value="/home/zhoutengteng/Desktop/java_test/jiduan3/1331:/home/zhoutengteng/Desktop/java_test/jiduan3/1331/lib/ImageReader.jar:/home/zhoutengteng/Desktop/java_test/jiduan3/1331/lib/appframework-1.0.3.jar:/home/zhoutengteng/Desktop/java_test/jiduan3/1331/lib/junit-4.9.jar:/home/zhoutengteng/Desktop/java_test/jiduan3/1331/lib/swing-worker-1.1.jar:/home/zhoutengteng/Desktop/java_test/jiduan3/1331/class:/usr/lib/jvm/java-7-openjdk-amd64/lib/dt.jar:/usr/lib/jvm/java-7-openjdk-amd64/lib/tools.jar:/usr/share/ant/lib/junit.jar:/usr/share/java/ant-launcher-1.9.3.jar:/usr/share/ant/lib/ant.jar:/usr/share/ant/lib/ant-junit.jar:/usr/share/ant/lib/ant-junit4.jar" />
+          <property name="java.class.path" value="/home/zhoutengteng/Desktop/java_test/hangleImage/code:/home/zhoutengteng/Desktop/java_test/hangleImage/code/lib/ImageReader.jar:/home/zhoutengteng/Desktop/java_test/hangleImage/code/lib/appframework-1.0.3.jar:/home/zhoutengteng/Desktop/java_test/hangleImage/code/lib/junit-4.9.jar:/home/zhoutengteng/Desktop/java_test/hangleImage/code/lib/swing-worker-1.1.jar:/home/zhoutengteng/Desktop/java_test/hangleImage/code/class:/usr/lib/jvm/java-7-openjdk-amd64/lib/dt.jar:/usr/lib/jvm/java-7-openjdk-amd64/lib/tools.jar:/usr/share/ant/lib/junit.jar:/usr/share/java/ant-launcher-1.9.3.jar:/usr/share/ant/lib/ant.jar:/usr/share/ant/lib/ant-junit.jar:/usr/share/ant/lib/ant-junit4.jar" />
 
           <property name="reports.dir" value="reports" />
 
           <property name="java.vm.specification.version" value="1.7" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ImplementImageIOTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/home/zhoutengteng/Desktop/java_test/jiduan3/1331/reports/TEST-ImplementImageIOTest.xml crashfile=/home/zhoutengteng/Desktop/java_test/jiduan3/1331/junitvmwatcher1644491486087214112.properties propsfile=/home/zhoutengteng/Desktop/java_test/jiduan3/1331/junit566235673418233125.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ImplementImageIOTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/home/zhoutengteng/Desktop/java_test/hangleImage/code/reports/TEST-ImplementImageIOTest.xml crashfile=/home/zhoutengteng/Desktop/java_test/hangleImage/code/junitvmwatcher8731831665104756853.properties propsfile=/home/zhoutengteng/Desktop/java_test/hangleImage/code/junit2825950438471252229.properties" />
 
           <property name="sun.arch.data.model" value="64" />
 
@@ -142,44 +142,28 @@
 
       </properties>
 
-      <testcase classname="ImplementImageIOTest" name="testcase7" time="0.718" />
+      <testcase classname="ImplementImageIOTest" name="testcase2" time="0.47" />
 
-      <testcase classname="ImplementImageIOTest" name="testcase8" time="0.406" />
+      <testcase classname="ImplementImageIOTest" name="testcase1" time="0.165" />
 
-      <testcase classname="ImplementImageIOTest" name="testcase4" time="0.067" />
+      <testcase classname="ImplementImageIOTest" name="testcase8" time="0.315" />
 
-      <testcase classname="ImplementImageIOTest" name="testcase5" time="0.279" />
+      <testcase classname="ImplementImageIOTest" name="testcase5" time="0.285" />
 
-      <testcase classname="ImplementImageIOTest" name="testcase6" time="0.177">
-          <failure message="expected:&lt;-1381654&gt; but was:&lt;-1447447&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: expected:&lt;-1381654&gt; but was:&lt;-1447447&gt;
-	at ImplementImageIOTest.testcase6(ImplementImageIOTest.java:119)
-</failure>
+      <testcase classname="ImplementImageIOTest" name="testcase6" time="0.277" />
 
-      </testcase>
+      <testcase classname="ImplementImageIOTest" name="testcase7" time="0.283" />
 
-      <testcase classname="ImplementImageIOTest" name="testcase2" time="0.041">
-          <failure message="expected:&lt;-5526613&gt; but was:&lt;-5592406&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: expected:&lt;-5526613&gt; but was:&lt;-5592406&gt;
-	at ImplementImageIOTest.testcase2(ImplementImageIOTest.java:43)
-</failure>
+      <testcase classname="ImplementImageIOTest" name="testcase3" time="0.065" />
 
-      </testcase>
+      <testcase classname="ImplementImageIOTest" name="testcase4" time="0.063" />
 
-      <testcase classname="ImplementImageIOTest" name="testcase1" time="0.075" />
-
-      <testcase classname="ImplementImageIOTest" name="testcase3" time="0.063" />
-
-      <system-out><![CDATA[2199606
+      <system-out><![CDATA[480054
 54
-715
-1024
+400
+400
 3
-3
-2199606
-54
-715
-1024
-3
-3
+0
 480054
 54
 400
@@ -198,12 +182,18 @@
 1024
 3
 3
-480054
+2199606
 54
-400
-400
+715
+1024
 3
-0
+3
+2199606
+54
+715
+1024
+3
+3
 480054
 54
 400

@@ -89,6 +89,12 @@ public class ImplementImageIO  implements IImageIO {
         }
       Image img = Toolkit.getDefaultToolkit().createImage(new MemoryImageSource(widthBMP, heightBMP, pix, 0, widthBMP));
       //Image img = Toolkit.getDefaultToolkit().createImage(new MemoryImageSource(w, h, pix, 0, w));
+                    int cc = 1;
+                    //System.out.println(" ddd" + (cc + cc * 256 + cc * 256 * 256 + 255*256*256*256));
+                    //System.out.println((cc + cc << 8 + cc << 16 + 0xff << 24 ));
+                    System.out.println(" ddd" + (cc + cc * 256 ));
+                    System.out.println((cc & 0xff) +( cc << 8));
+                      // pix[y*widthBMP + x] = cc + cc << 8 + cc << 16 + 0xff << 24;
       
       return img;
       
